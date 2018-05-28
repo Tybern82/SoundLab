@@ -50,4 +50,6 @@ class TimeSpan {
     var isNegative := negMarker ?= "-";
     return create TimeSpan<isNegative, hours, minutes, seconds, millis>;
   }
+  
+  constant var Zero:TimeSpan := create TimeSpan<0>;
 }
