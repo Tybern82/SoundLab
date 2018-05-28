@@ -1,0 +1,19 @@
+using os.audio.AudioOutput;
+using os.audio.AudioDevice;
+using os.audio.AudioFile;
+
+module SoundLab {
+
+    class SoundCue : Cue {
+        var Level:real <[minValue := 0, maxValue := 100.0]> := 1;
+        var StartTime:TimeSpan := TimeSpan.Zero;      // offset into track to start playback
+        var EndTime:TimeSpan := SoundFile.Length - StartTime;
+        var RepeatCount:integer <[unsigned, infinite]> := 1;
+
+        var PlaybackDevice:AudioOutput := AudioDevice.DefaultPlayback;
+
+        var SoundFile:AudioFile <[exists]>;
+
+        fn PlaybackLength:TimeSpan => EndTime - StartTime;
+    }
+}
