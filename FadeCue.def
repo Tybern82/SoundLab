@@ -1,0 +1,3 @@
+class FadeCue : Cue {
+    var FadeTime:TimeSpan := TimeSpan.Zero;
+}
