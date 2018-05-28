@@ -1,0 +1,16 @@
+module os.audio {
+
+  interface AudioFormat {
+    var Channels:integer <[minValue := 1]> := 2;
+    var ChannelFormat:enum {
+      Mono,
+      Stereo,
+      F2_1,
+      F5_1,
+      F7_1,
+      Custom
+    } := ChannelFormat.Stereo;
+    var BitDepth:integer <[in range 4 -> 64]> := 24;
+    var SampleRate:integer <[minValue := 1]> := 44100;
+  }
+}
