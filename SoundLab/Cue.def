@@ -1,33 +1,36 @@
-interface Cue {
- 	var CueID:string;
-	var Name:string := CueID;
-	var AutoTrigger:enum {				
-        Immediate,
-        Following,
-        None
-    } := AutoTrigger.None;
-    
-    var PreWait:TimeSpan := TimeSpan.Zero;
-    var PostWait:TimeSpan := TimeSpan.Zero;
-    
-    fn play<> => callback onPlay<$self>;
-    fn pause<> => callback onPause<$self>;
-    fn resume<> => callback onResume<$self>;
-    fn stop<> => callback onStop<$self>;
-    
-    callback {
-        fn onPlay<triggeredCue:Cue>;
-        fn onPause<triggeredCue:Cue>;
-        fn onResume<triggerdCue:Cue>;
-        fn onStop<triggeredCue:Cue>;
-    }
-    
-    Cue<id:string> {
-    	$self.CueID := id;
-    }
-    
-    Cue<id:string,name:string> {
-    	$self.CueID := id;
-    	$self.Name := name;
-    }
+module SoundLab {
+
+	interface Cue {
+		var CueID:string;
+		var Name:string := CueID;
+		var AutoTrigger:enum {				
+		Immediate,
+		Following,
+		None
+	    } := AutoTrigger.None;
+
+	    var PreWait:TimeSpan := TimeSpan.Zero;
+	    var PostWait:TimeSpan := TimeSpan.Zero;
+
+	    fn play<> => callback onPlay<$self>;
+	    fn pause<> => callback onPause<$self>;
+	    fn resume<> => callback onResume<$self>;
+	    fn stop<> => callback onStop<$self>;
+
+	    callback {
+		fn onPlay<triggeredCue:Cue>;
+		fn onPause<triggeredCue:Cue>;
+		fn onResume<triggerdCue:Cue>;
+		fn onStop<triggeredCue:Cue>;
+	    }
+
+	    Cue<id:string> {
+		$self.CueID := id;
+	    }
+
+	    Cue<id:string,name:string> {
+		$self.CueID := id;
+		$self.Name := name;
+	    }
+	}
 }
