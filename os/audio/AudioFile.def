@@ -1,0 +1,10 @@
+using os.io.File;
+
+module os.audio {
+
+    interface AudioFile : File {
+        var Length:TimeSpan;      
+        var Format:AudioFormat;  
+        var Samples:AudioSample[];
+    }
+}
