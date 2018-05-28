@@ -1,12 +1,13 @@
 module SoundLab {
 
 	interface Cue {
-		var CueID:string;
-		var Name:string := CueID;
+        var Project:SoundLabProject <[not null]>;
+	    var CueID:string;
+        var Name:string := CueID;
 		var AutoTrigger:enum {				
-		Immediate,
-		Following,
-		None
+            Immediate,
+            Following,
+            None
 	    } := AutoTrigger.None;
 
 	    var PreWait:TimeSpan := TimeSpan.Zero;
@@ -18,19 +19,20 @@ module SoundLab {
 	    fn stop<> => callback onStop<$self>;
 
 	    callback {
-		fn onPlay<triggeredCue:Cue>;
-		fn onPause<triggeredCue:Cue>;
-		fn onResume<triggerdCue:Cue>;
-		fn onStop<triggeredCue:Cue>;
+            fn onPlay<triggeredCue:Cue>;
+            fn onPause<triggeredCue:Cue>;
+            fn onResume<triggerdCue:Cue>;
+            fn onStop<triggeredCue:Cue>;
 	    }
 
-	    Cue<id:string> {
-		$self.CueID := id;
+	    Cue<project:SoundLabProject, id:string> {
+            $self.Project = project;
+		    $self.CueID := id;
 	    }
 
-	    Cue<id:string,name:string> {
-		$self.CueID := id;
-		$self.Name := name;
+	    Cue<project:SoundLabProject, id:string,name:string> {
+            $self<project, id>;
+            $self.Name := name;
 	    }
 	}
 }
