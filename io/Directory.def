@@ -1,0 +1,40 @@
+module io {
+
+    class Directory : DirectoryEntry {
+        
+        var Contents:DirectoryEntry[];
+        
+        fn isRelative:boolean {            
+            return isRelative(Name) or ((Path != null) and Path.isRelative);
+        }
+        
+        fn AbsolutePath:Directory <> {
+            var base:Directory := (Path != null) ? Path.AbsolutePath : null;
+            if (isRelative(Name)) {
+                select (pathElement) {
+                    on "." {
+                        return (base != null) ? base : Directory.WorkingDirectory;
+                    }
+                    on ".." {
+                        return (base != null) ? base.Path : Directory.WorkingDirectory.Path;
+                    }
+                }
+            } else {
+                return create Directory<Name, base>;
+            }
+        }
+        
+        constant var DirectorySeparator := URI.PathSeparator;
+        
+        shared fn isRelative<pathElement:string> {
+            select (pathElement) {
+                in {".", ".."} {
+                    return true;
+                }
+                otherwise {
+                    return false;
+                }
+            }
+        }
+    }
+}
