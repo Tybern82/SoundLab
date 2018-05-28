@@ -1,8 +1,6 @@
 module io {
 
-    interface File {
-        var Filename:string;        // individual name of the file ("File.def")
-        var Path:Directory;         // directory containing this file (primary directory for files with multiple links)
+    interface File : DirectoryEntry {
         
         var FileMode:enum {
             Binary,
