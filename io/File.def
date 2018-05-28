@@ -1,0 +1,22 @@
+module io {
+
+    interface File {
+        var Filename:string;        // individual name of the file ("File.def")
+        var Path:Directory;         // directory containing this file (primary directory for files with multiple links)
+        
+        var FileMode:enum {
+            Binary,
+            Text
+        } := FileMode.Binary;
+        
+        var Type:FileType := FileType.Unknown;
+        var CharsetEncoding:Charset := Charset.UTF8;
+        
+        fn AbsoluteFilename:File; // removes any relative path references in the Path
+        
+        File<path:Directory, filename:string> {
+            $self.Filename := filename;
+            $self.Path := path;
+        }
+    }
+}
