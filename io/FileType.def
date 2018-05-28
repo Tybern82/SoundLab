@@ -1,0 +1,28 @@
+module io {
+
+    class FileType {
+        var TypeFormat:enum {
+            MIME,           // specify type by the MIME database
+            ByExtension,    // specify type by the file extension
+            Local           // specify type using a local os database
+        } := TypeFormat.MIME;
+        
+        var Type:string[];
+        
+        fn TypeString:string {
+            var typeSeparator := '.';       // default to "name.name"
+            select (TypeFormat) {
+                on TypeFormat.MIME {
+                    typeSeparator := '/';   // mime format is "name/name"
+                }
+                on TypeFormat.ByExtension {
+                    return '.' + Type.CAR<"">;  // array.CAR<x> := array[0] if length >0, or x if empty array
+                }
+            }
+            $result := Type.CAR<"">;
+            foreach (name:string in Type.CDR) { // array.CDR := {array[1], array[2],....array[length-1]}, or empty array if length is 0 or 1
+                $result += typeSeparator + name;
+            }
+        }
+    }
+}
