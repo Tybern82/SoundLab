@@ -1,0 +1,53 @@
+class TimeSpan {
+  var isNegative:boolean := false;
+  var hours:integer <[readonly, minValue := 0]> := 0;
+  var minutes:integer <[readonly, minValue := 0, maxValue := 59]> := 0;
+  var seconds:integer <[readonly, minValue := 0, maxValue := 59]> := 0;
+  var millis:integer <[readonly, minValue := 0, maxValue := 999]> := 0;
+  
+  TimeSpan<> => return TimeSpan<0>;
+  TimeSpan<totalMillis:integer> => return TimeSpan<
+    totalMillis < 0,
+    (totalMillis / 1000*60*60):integer,
+    (totalMillis / 1000*60):integer,
+    (totalMillis / 1000):integer,
+    (totalMillis % 1000)
+  >;
+  
+  TimeSpan<isNegative:boolean, 
+    hours:integer <[minValue := 0]>,
+    minutes:integer <[minValue := 0, maxValue := 59]>,
+    seconds:integer <[minValue := 0, maxValue := 59]>,
+    millis:integer <[minValue := 0, maxValue := 999]>> {
+    
+    $self.isNegative := isNegative;
+    $self.hours := hours;
+    $self.minutes := minutes;
+    $self.seconds := seconds;
+    $self.millis := millis;
+  }
+  
+  fn toMilliseconds:integer <> {
+    $result := hours;
+    $result *= 60;
+    $result += minutes;
+    $result *= 60;
+    $result += seconds;
+    $result *= 1000;
+    $result += millis;
+    $result := isNegative ? -$result : $result;
+  }
+  
+  fn toString:string <> {
+    return string.format<timeFormat, hours, minutes, seconds, millis, isNegative ? "-" : "">;
+  }
+  
+  private constant var timeFormat:string := "{4:s}{0:i2}:{1:i2}:{2:i2}.{3:i3}";
+  
+  shared fn parseString:TimeSpan <value:string <[pattern := timeFormat]>> {
+    var negMarker:string, hours:integer, minutes:integer, seconds:integer, millis:integer;
+    string.parseStringFormat<value, timeFormat, {hours, minutes, seconds, millis, negMarker}>;
+    var isNegative := negMarker ?= "-";
+    return create TimeSpan<isNegative, hours, minutes, seconds, millis>;
+  }
+}
