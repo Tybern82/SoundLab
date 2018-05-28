@@ -1,5 +1,5 @@
 interface Cue {
- 	var CueID:string <[unique]>;
+ 	var CueID:string;
 	var Name:string := CueID;
 	var AutoTrigger:enum {				
         Immediate,
@@ -20,5 +20,14 @@ interface Cue {
         fn onPause<triggeredCue:Cue>;
         fn onResume<triggerdCue:Cue>;
         fn onStop<triggeredCue:Cue>;
+    }
+    
+    Cue<id:string> {
+    	$self.CueID := id;
+    }
+    
+    Cue<id:string,name:string> {
+    	$self.CueID := id;
+    	$self.Name := name;
     }
 }
