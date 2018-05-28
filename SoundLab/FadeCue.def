@@ -1,0 +1,14 @@
+module SoundLab {
+
+    class FadeCue : Cue {
+        var FadeTime:TimeSpan := TimeSpan.Zero;
+        var FadeMode:enum {
+            Absolute,
+            Relative
+        } := FadeMode.Absolute;
+        var Level:real <[minValue := -100.0, maxValue := 100.0]> := 0.0;
+        var StopCue:boolean := false;    // stop the cue when fade is complete
+
+        var TargetCue:Cue;
+    }
+}
