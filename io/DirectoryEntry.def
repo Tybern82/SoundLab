@@ -1,0 +1,7 @@
+module io {
+
+    class DirectoryEntry {    
+        var Name:string <[not null]>;
+        var Path:Directory;
+    }
+}
