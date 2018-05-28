@@ -1,0 +1,8 @@
+module SoundLab {
+
+    class SoundLabProject {
+        var Cues:{string -> Cue};   // map of CueID to Cue, Cues without an ID will not be stored in this mapping, duplicate IDs will reference the first defined cue
+        
+        var CueList:Cue[];          // list of cues in project in playback order
+    }
+}
