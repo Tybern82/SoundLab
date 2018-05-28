@@ -42,7 +42,7 @@ class TimeSpan {
     return string.format<timeFormat, hours, minutes, seconds, millis, isNegative ? "-" : "">;
   }
   
-  private constant var timeFormat:string := "{4:s}{0:i2}:{1:i2}:{2:i2}.{3:i3}";
+  private constant var timeFormat:string := "[[[[{4:s}]{0:i2}:]{1:i2}:]{2:i2}.]{3:i3}";
   
   shared fn parseString:TimeSpan <value:string <[pattern := timeFormat]>> {
     var negMarker:string, hours:integer, minutes:integer, seconds:integer, millis:integer;
