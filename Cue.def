@@ -10,10 +10,10 @@ interface Cue {
     var PreWait:TimeSpan := TimeSpan.Zero;
     var PostWait:TimeSpan := TimeSpan.Zero;
     
-    fn play<> => callback onPlay<this>;
-    fn pause<> => callback onPause<this>;
-    fn resume<> => callback onResume<this>;
-    fn stop<> => callback onStop<this>;
+    fn play<> => callback onPlay<$self>;
+    fn pause<> => callback onPause<$self>;
+    fn resume<> => callback onResume<$self>;
+    fn stop<> => callback onStop<$self>;
     
     callback {
         fn onPlay<triggeredCue:Cue>;
