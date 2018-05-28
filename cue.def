@@ -1,0 +1,24 @@
+interface Cue {
+ 	var CueID:string <[unique]>;
+	var Name:string := CueID;
+	var AutoTrigger:enum {				
+        Immediate,
+        Following,
+        None
+    } := AutoTrigger.None;
+    
+    var PreWait:TimeSpan := TimeSpan.Zero;
+    var PostWait:TimeSpan := TimeSpan.Zero;
+    
+    fn play<> => callback onPlay<this>;
+    fn pause<> => callback onPause<this>;
+    fn resume<> => callback onResume<this>;
+    fn stop<> => callback onStop<this>;
+    
+    callback {
+        fn onPlay<triggeredCue:Cue>;
+        fn onPause<triggeredCue:Cue>;
+        fn onResume<triggerdCue:Cue>;
+        fn onStop<triggeredCue:Cue>;
+    }
+}
